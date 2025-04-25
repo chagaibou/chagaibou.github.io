@@ -83,16 +83,16 @@ body {
 }
 
 /* Remplacez le hover par une classe active */
-.project-card.active .project-inner {
+.project-card:active .project-inner {
   transform: rotateY(180deg);
 }
 
 /* Sur mobile, désactivez l'animation hover */
-@media (hover: none) {
+/* @media (hover: none) {
   .project-card:hover .project-inner {
     transform: none;
   }
-}
+} */
 
 /* Dans votre media query mobile */
 @media (max-width: 768px) {
