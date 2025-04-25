@@ -1,4 +1,12 @@
 // Initialisation d'EmailJS
+async function fetchEnvVars() {
+  const response = await fetch("/.netlify/functions/get-env-vars");
+  const data = await response.json();
+  console.log(data.myApiKey); // Accédez à vos variables ici
+}
+
+fetchEnvVars();
+
 (function () {
   emailjs.init({
     publicKey: process.env.publicKey,
