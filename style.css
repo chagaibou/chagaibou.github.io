@@ -82,11 +82,6 @@ body {
   transform: rotateY(180deg);
 }
 
-/* Ajoutez ceci à votre fichier CSS */
-.project-card.active .project-inner {
-  transform: rotateY(180deg);
-}
-
 .project-front,
 .project-back {
   backface-visibility: hidden;

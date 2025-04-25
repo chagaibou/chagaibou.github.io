@@ -72,18 +72,3 @@ const skillBarObserver = new IntersectionObserver(
 skillBars.forEach((bar) => {
   skillBarObserver.observe(bar);
 });
-
-document.querySelectorAll(".project-card").forEach((card) => {
-  // Pour les écrans tactiles
-  card.addEventListener("touchstart", function () {
-    this.classList.toggle("active");
-  });
-
-  // Pour la souris (au cas où)
-  card.addEventListener("click", function () {
-    if (window.innerWidth <= 768) {
-      // Seulement sur mobile
-      this.classList.toggle("active");
-    }
-  });
-});
