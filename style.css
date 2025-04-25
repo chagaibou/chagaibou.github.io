@@ -82,7 +82,6 @@ body {
   transform: rotateY(180deg);
 }
 
-<<<<<<< HEAD
 /* Remplacez le hover par une classe active */
 .project-card:active .project-inner {
   transform: rotateY(180deg);
@@ -106,8 +105,6 @@ body {
   }
 }
 
-=======
->>>>>>> parent of e493c2a (Animation pour la version mobile)
 .project-front,
 .project-back {
   backface-visibility: hidden;
