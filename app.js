@@ -79,28 +79,6 @@ document.querySelectorAll(".project-card").forEach((card) => {
     this.classList.toggle("active");
   });
 
-  document.querySelectorAll(".project-card").forEach((card) => {
-    card.addEventListener("click", function () {
-      this.classList.toggle("flipped");
-    });
-  });
-
-  // Gestion optimale pour mobile
-  document.querySelectorAll(".project-card").forEach((card) => {
-    let touchTimer;
-
-    card.addEventListener("touchstart", function (e) {
-      e.preventDefault();
-      touchTimer = setTimeout(() => {
-        this.classList.toggle("flipped");
-      }, 200); // Délai pour éviter les déclenchements accidentels
-    });
-
-    card.addEventListener("touchend", function () {
-      clearTimeout(touchTimer);
-    });
-  });
-
   // Pour la souris (au cas où)
   card.addEventListener("click", function () {
     if (window.innerWidth <= 768) {
