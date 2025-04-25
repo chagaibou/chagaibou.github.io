@@ -1,41 +1,63 @@
 // Initialisation d'EmailJS
+let emailjsInitialized = false;
+
 async function fetchEnvVars() {
-  const response = await fetch("/.netlify/functions/get-env-vars");
-  const data = await response.json();
-  console.log(data.myApiKey); // Accédez à vos variables ici
+  try {
+    const response = await fetch("/.netlify/functions/get-env-vars");
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching env vars:", error);
+    throw error;
+  }
 }
 
-fetchEnvVars();
-
-(function () {
-  emailjs.init({
-    publicKey: process.env.publicKey,
-  });
-})();
+async function initializeEmailJS() {
+  try {
+    const envVars = await fetchEnvVars();
+    emailjs.init({
+      publicKey: envVars.publicKey,
+    });
+    emailjsInitialized = true;
+    return envVars;
+  } catch (error) {
+    console.error("Failed to initialize EmailJS:", error);
+    throw error;
+  }
+}
 
 // Fonction d'envoi d'email
-function sendEmail(event) {
+async function sendEmail(event) {
   event.preventDefault();
 
-  emailjs
-    .send(process.env.serviceID, process.env.templateID, {
+  try {
+    if (!emailjsInitialized) {
+      const envVars = await initializeEmailJS();
+    }
+
+    const envVars = await fetchEnvVars();
+
+    await emailjs.send(envVars.serviceID, envVars.templateID, {
       name: document.getElementById("name").value,
       email: document.getElementById("email").value,
       subject: document.getElementById("subject").value,
       message: document.getElementById("message").value,
-    })
-    .then(
-      function (response) {
-        console.log("SUCCESS!", response.status, response.text);
-        alert("Votre message a été envoyé avec succès!");
-      },
-      function (error) {
-        console.log("FAILED...", error);
-        alert("Erreur lors de l'envoi du message. Veuillez réessayer.");
-      }
-    );
+    });
+
+    console.log("SUCCESS!");
+    alert("Votre message a été envoyé avec succès!");
+  } catch (error) {
+    console.log("FAILED...", error);
+    alert("Erreur lors de l'envoi du message. Veuillez réessayer.");
+  }
 }
 
-// Si vous utilisez ce code dans un module, vous devrez peut-être exposer la fonction
-// à la portée globale si elle est appelée depuis HTML
+// Initialisation au chargement de la page
+initializeEmailJS().catch((error) => {
+  console.error("Initialization error:", error);
+});
+
+// Exposition de la fonction à la portée globale
 window.sendEmail = sendEmail;
