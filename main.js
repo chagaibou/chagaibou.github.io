@@ -1,9 +1,7 @@
-import { EMAILJS_CONFIG } from "./config.js";
-
 // Initialisation d'EmailJS
 (function () {
   emailjs.init({
-    publicKey: EMAILJS_CONFIG.publicKey,
+    publicKey: process.env.publicKey,
   });
 })();
 
@@ -12,7 +10,7 @@ function sendEmail(event) {
   event.preventDefault();
 
   emailjs
-    .send(EMAILJS_CONFIG.serviceID, EMAILJS_CONFIG.templateID, {
+    .send(process.env.serviceID, process.env.templateID, {
       name: document.getElementById("name").value,
       email: document.getElementById("email").value,
       subject: document.getElementById("subject").value,
