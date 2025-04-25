@@ -72,3 +72,25 @@ const skillBarObserver = new IntersectionObserver(
 skillBars.forEach((bar) => {
   skillBarObserver.observe(bar);
 });
+
+// Gestion des cartes projets pour mobile
+document.addEventListener("DOMContentLoaded", function () {
+  const projectCards = document.querySelectorAll(".project-card");
+
+  projectCards.forEach((card) => {
+    card.addEventListener("click", function () {
+      // Sur mobile, toggle une classe active au lieu de hover
+      if (window.innerWidth <= 768) {
+        projectCards.forEach((c) => c.classList.remove("active"));
+        this.classList.add("active");
+      }
+    });
+  });
+
+  // Réinitialise quand on clique ailleurs
+  document.addEventListener("click", function (e) {
+    if (!e.target.closest(".project-card") && window.innerWidth <= 768) {
+      projectCards.forEach((c) => c.classList.remove("active"));
+    }
+  });
+});
